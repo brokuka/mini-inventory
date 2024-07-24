@@ -9,10 +9,13 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
+  "dependencies": {
+    "@unocss/reset": "^0.61.5"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^2.23.2",
     "@nuxt/eslint": "^0.3.13",
-    "@pinia/nuxt": "^0.5.1",
+    "@nuxt/icon": "^1.3.1",
     "@vueuse/core": "^10.11.0",
     "@vueuse/nuxt": "^10.11.0",
     "eslint": "^9.7.0",
@@ -22,11 +25,5 @@
     "template-copyright": "^1.0.1",
     "typescript": "^5.5.4",
     "vue-tsc": "^2.0.28"
-  },
-  "dependencies": {
-    "@unocss/reset": "^0.61.5",
-    "@vueuse/components": "^10.11.0",
-    "pinia": "^2.1.7",
-    "vue-draggable-plus": "^0.5.2"
   }
 }

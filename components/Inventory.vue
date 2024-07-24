@@ -1,64 +1,103 @@
 <script setup lang="ts">
-import { type DraggableEvent, VueDraggable } from 'vue-draggable-plus'
+interface Item {
+  id: number
+  order: number
+  count?: number
+  image?: string
+}
 
-const items = ref(Array(25).fill({
+const arraySize = 25 // Define the size of the array
+
+const filledArray = Array.from({ length: arraySize }, (_, i) => {
+  const newObj = {} as Item
+  newObj.id = i + 1
+  newObj.order = i
+
+  return newObj
+})
+
+const lc = useLocalStorage('inventory/entities', {} as Item[], { writeDefaults: false })
+
+const items = ref(lc.value ?? filledArray.fill({
   id: 1,
+  order: 0,
   count: 4,
-  order: 1,
   image: 'https://picsum.photos/54',
 }, 0, 1).fill({
   id: 2,
+  order: 1,
   count: 2,
-  order: 2,
   image: 'https://picsum.photos/53',
-}, 1, 2))
+}, 1, 2),
+)
 
-// const lc = useLocalStorage('inventory/entities', items, { mergeDefaults: true })
+function swapItemsById(id1: number, id2: number) {
+  const index1 = items.value.findIndex(item => item.id === id1)
+  const index2 = items.value.findIndex(item => item.id === id2)
 
-// watchEffect(() => console.log('@lc', lc.value))
+  if (index1 !== -1 && index2 !== -1) {
+    [items.value[index1], items.value[index2]] = [items.value[index2], items.value[index1]]
+  }
+};
 
-function onUpdate(e: DraggableEvent) {
-  const swappedElement = items.value.find(item => item?.order === e.oldIndex as number + 1)
-  const oldPlaceElement = items.value.find(item => item?.order === e.newIndex as number + 1)
-  // swappedElement.order = e.newIndex as number + 1;
+function onStartDrag(e: DragEvent, item: Item) {
+  if (!item?.count)
+    return false
 
-  if (!swappedElement)
+  e.dataTransfer?.setData('id', `${item.id}`)
+}
+
+function onDrop(e: DragEvent & { target: HTMLElement }) {
+  const id = e.dataTransfer?.getData('id')
+
+  if (!id) {
+    return false
+  }
+
+  const data = items.value.find(item => item.id === +id)
+  const previousElement = document.querySelector(`[data-order="${data?.order}"]`)
+
+  const targetElement = e.target
+  const targetOrder = targetElement?.getAttribute('data-order')
+
+  if (!targetOrder)
     return
 
-  console.log('@oldPlaceElement', oldPlaceElement)
+  const targetData = items.value.find(item => item.order === +targetOrder)
 
-  swappedElement.order = e.newIndex as number + 1
+  if (!targetData)
+    return false
 
-  console.log('@swappedElement', swappedElement)
-// console.log('@oldPlaceElement', oldPlaceElement)
+  if (data && targetOrder && previousElement) {
+    swapItemsById(data.id, targetData.id)
+  }
 }
-
-function onMove(e: DraggableEvent) {
-  e.preventDefault()
-  // console.log(e.preventDefault)
-}
-
-function onChoose(e: DraggableEvent) {
-  const empty = Boolean(e.item.dataset.empty)
-
-  console.log(e.item)
-
-  // console.log(e.item.dataset.empty)
-}
-
-const filter = `[data-empty="true"]`
 </script>
 
 <template>
-  <VueDraggable v-model="items" class="inventory" :filter @move="onMove" @choose="onChoose">
-    <div v-for="slot in items" :key="slot" class="item" :data-empty="!slot">
-      <div v-if="slot">
-        <img :src="slot.image">
+  <div class="inventory">
+    <ClientOnly>
+      <div
+        v-for="item in items" :key="item.id" class="item" :data-empty="!item.count" :draggable="!!item?.image"
+        :data-order="item.order" @dragstart.stop="onStartDrag($event, item)" @drop="onDrop" @dragover.prevent
+        @dragenter.prevent
+      >
+        <div v-if="item.count">
+          <div>
+            <img :src="item.image">
+          </div>
+
+          <span class="item_count">{{ item?.count }}</span>
+        </div>
       </div>
 
-      <span v-if="slot" class="item_count">{{ slot?.count }}</span>
-    </div>
-  </VueDraggable>
+      <template #fallback>
+        <div class="fallback">
+          <Icon class="spinner" name="svg-spinners:3-dots-move" />
+        </div>
+      </template>
+    </ClientOnly>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -98,6 +137,8 @@ const filter = `[data-empty="true"]`
   .item:last-child {
     border-bottom-right-radius: 12px;
     box-shadow: none;
+
+    overflow: hidden;
   }
 }
 
@@ -107,6 +148,7 @@ const filter = `[data-empty="true"]`
   align-items: center;
 
   position: relative;
+  user-select: none;
 
   box-shadow: inset -1px -1px 0px $primary-border;
 
@@ -128,5 +170,20 @@ const filter = `[data-empty="true"]`
 
   border: 1px solid $primary-border;
   border-top-left-radius: 6px;
+}
+
+.fallback {
+  display: grid;
+  place-items: center;
+
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+}
+
+.spinner {
+  width: 120px;
+  height: 120px;
+
+  color: $primary-border;
 }
 </style>

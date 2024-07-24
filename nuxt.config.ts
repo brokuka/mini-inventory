@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@nuxt/eslint', 'template-copyright', '@pinia/nuxt', "@vueuse/nuxt"],
+  modules: ['@nuxt/eslint', 'template-copyright', '@nuxt/icon', "@vueuse/nuxt"],
 
   eslint: {
     config: {
