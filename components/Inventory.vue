@@ -82,7 +82,7 @@ function onDrop(e: DragEvent & { target: HTMLElement }) {
       >
         <div v-if="item.count">
           <div>
-            <img :src="item.image">
+            <img width="54" height="54" :src="item.image">
           </div>
 
           <span class="item_count">{{ item?.count }}</span>
