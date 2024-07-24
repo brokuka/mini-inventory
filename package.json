@@ -1,0 +1,32 @@
+{
+  "name": "nuxt-app",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.23.2",
+    "@nuxt/eslint": "^0.3.13",
+    "@pinia/nuxt": "^0.5.1",
+    "@vueuse/core": "^10.11.0",
+    "@vueuse/nuxt": "^10.11.0",
+    "eslint": "^9.7.0",
+    "eslint-plugin-format": "^0.1.2",
+    "nuxt": "^3.12.4",
+    "sass": "^1.77.8",
+    "template-copyright": "^1.0.1",
+    "typescript": "^5.5.4",
+    "vue-tsc": "^2.0.28"
+  },
+  "dependencies": {
+    "@unocss/reset": "^0.61.5",
+    "@vueuse/components": "^10.11.0",
+    "pinia": "^2.1.7",
+    "vue-draggable-plus": "^0.5.2"
+  }
+}
