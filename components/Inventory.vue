@@ -6,7 +6,7 @@ interface Item {
   image?: string
 }
 
-const arraySize = 25 // Define the size of the array
+const arraySize = 25
 
 const filledArray = Array.from({ length: arraySize }, (_, i) => {
   const newObj = {} as Item
@@ -14,11 +14,7 @@ const filledArray = Array.from({ length: arraySize }, (_, i) => {
   newObj.order = i
 
   return newObj
-})
-
-const lc = useLocalStorage('inventory/entities', {} as Item[], { writeDefaults: false })
-
-const items = ref(lc.value ?? filledArray.fill({
+}).fill({
   id: 1,
   order: 0,
   count: 4,
@@ -28,8 +24,10 @@ const items = ref(lc.value ?? filledArray.fill({
   order: 1,
   count: 2,
   image: 'https://picsum.photos/53',
-}, 1, 2),
-)
+}, 1, 2)
+
+const items = ref(filledArray)
+const lc = useLocalStorage('inventory/entities', items, { writeDefaults: false })
 
 function swapItemsById(id1: number, id2: number) {
   const index1 = items.value.findIndex(item => item.id === id1)
@@ -78,7 +76,7 @@ function onDrop(e: DragEvent & { target: HTMLElement }) {
   <div class="inventory">
     <ClientOnly>
       <div
-        v-for="item in items" :key="item.id" class="item" :data-empty="!item.count" :draggable="!!item?.image"
+        v-for="item in lc" :key="item.id" class="item" :data-empty="!item.count" :draggable="!!item?.image"
         :data-order="item.order" @dragstart.stop="onStartDrag($event, item)" @drop="onDrop" @dragover.prevent
         @dragenter.prevent
       >
