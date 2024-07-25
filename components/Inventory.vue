@@ -80,7 +80,6 @@ function onClickItem(item: Item) {
 function onItemRemove(toRemoveItem: Item) {
 	toRemoveItem.image = undefined
 	toRemoveItem.count = undefined
-	// items.value.filter((item) => item.id !== toRemoveItem.id)
 }
 </script>
 
@@ -118,7 +117,7 @@ function onItemRemove(toRemoveItem: Item) {
 .inventory {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 99px);
+  grid-template-rows: repeat(5, 99.8px);
 
   border: 1px solid $primary-border;
   border-radius: 12px;
@@ -168,11 +167,16 @@ function onItemRemove(toRemoveItem: Item) {
 
   &:hover {
     background-color: #2f2f2f;
+		cursor: pointer;
   }
 
 	&.block {
 		pointer-events: none;
 	}
+}
+
+.item[data-empty="true"] {
+	cursor: auto;
 }
 
 .item_count {
