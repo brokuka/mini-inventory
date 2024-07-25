@@ -27,7 +27,7 @@
 
 	position: relative;
 
-	height: 497px;
+	height: 500px;
 
 	overflow: hidden;
 }
