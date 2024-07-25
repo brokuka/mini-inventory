@@ -1,4 +1,30 @@
+@use './animations';
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
 .container {
   width: min(100% - 2rem, 785px);
   margin-inline: auto;
 }
+
+.fade-enter-active {
+  animation: fadeIn 300ms ease-out;
+}
+
+.fade-leave-active {
+  animation: fadeOut 300ms ease-in;
+}
+
+.fade-up-enter-active {
+  animation: fadeInUp 300ms ease-out;
+}
+
+.fade-up-leave-active {
+  animation: fadeInDown 300ms ease-in;
+}
+
+// * {
+//   outline: 1px solid limegreen !important;
+// }

@@ -24,5 +24,11 @@
 	display: grid;
 	grid-template-columns: 236px 525px;
 	gap: 24px;
+
+	position: relative;
+
+	height: 497px;
+
+	overflow: hidden;
 }
 </style>

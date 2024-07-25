@@ -1,14 +1,7 @@
 <script setup lang="ts">
-interface Item {
-  id: number
-  order: number
-  count?: number
-  image?: string
-}
+const ARRAY_SIZE = 25
 
-const arraySize = 25
-
-const filledArray = Array.from({ length: arraySize }, (_, i) => {
+const filledArray = Array.from({ length: ARRAY_SIZE }, (_, i) => {
   const newObj = {} as Item
   newObj.id = i + 1
   newObj.order = i
@@ -18,13 +11,18 @@ const filledArray = Array.from({ length: arraySize }, (_, i) => {
   id: 1,
   order: 0,
   count: 4,
-  image: 'https://picsum.photos/54',
+	image: '/_nuxt/public/item/green.svg',
 }, 0, 1).fill({
   id: 2,
   order: 1,
-  count: 2,
-  image: 'https://picsum.photos/53',
-}, 1, 2)
+  count: 1,
+	image: '/_nuxt/public/item/brown.svg',
+}, 1, 2).fill({
+	id: 3,
+	order: 2,
+	count: 5,
+	image: '/_nuxt/public/item/purple.svg'
+}, 2, 3)
 
 const items = ref(filledArray)
 const lc = useLocalStorage('inventory/entities', items, { writeDefaults: false })
@@ -70,6 +68,20 @@ function onDrop(e: DragEvent & { target: HTMLElement }) {
     swapItemsById(data.id, targetData.id)
   }
 }
+
+
+const modal = ref<Item | null>(null)
+function onClickItem(item: Item) {
+	if (!item.count) return;
+
+  modal.value = item;
+}
+
+function onItemRemove(toRemoveItem: Item) {
+	toRemoveItem.image = undefined
+	toRemoveItem.count = undefined
+	// items.value.filter((item) => item.id !== toRemoveItem.id)
+}
 </script>
 
 <template>
@@ -79,13 +91,15 @@ function onDrop(e: DragEvent & { target: HTMLElement }) {
         v-for="item in lc" :key="item.id" class="item" :data-empty="!item.count" :draggable="!!item?.image"
         :data-order="item.order" @dragstart.stop="onStartDrag($event, item)" @drop="onDrop" @dragover.prevent
         @dragenter.prevent
+        @click="onClickItem(item)"
+				:class="{ block: modal }"
       >
-        <div v-if="item.count">
+        <div v-if="item.image">
           <div>
-            <img width="54" height="54" :src="item.image">
+            <img width="54" height="54" :src="item.image" alt="Item image">
           </div>
 
-          <span class="item_count">{{ item?.count }}</span>
+          <span class="item_count" v-if="item.count && item.count > 1">{{ item?.count }}</span>
         </div>
       </div>
 
@@ -96,6 +110,8 @@ function onDrop(e: DragEvent & { target: HTMLElement }) {
       </template>
     </ClientOnly>
   </div>
+
+  <ItemInfo v-model="modal" @remove="onItemRemove" />
 </template>
 
 <style lang="scss" scoped>
@@ -153,6 +169,10 @@ function onDrop(e: DragEvent & { target: HTMLElement }) {
   &:hover {
     background-color: #2f2f2f;
   }
+
+	&.block {
+		pointer-events: none;
+	}
 }
 
 .item_count {

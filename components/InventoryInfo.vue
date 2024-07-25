@@ -1,5 +1,5 @@
 <script setup>
-const SMALL_SKELETONS_GROUP = [155, 190, 170, 160, 140]
+const SKELETONS_GROUP = [155, 190, 170, 160, 140]
 </script>
 
 <template>
@@ -10,7 +10,7 @@ const SMALL_SKELETONS_GROUP = [155, 190, 170, 160, 140]
       <Skeleton width="190" height="26" rounded="base" />
 
       <div class="skeleton_group">
-        <Skeleton v-for="skeleton in SMALL_SKELETONS_GROUP" :key="skeleton" :width="skeleton" height="10" rounded="sm" />
+        <Skeleton v-for="skeleton in SKELETONS_GROUP" :key="skeleton" :width="skeleton" height="10" rounded="sm" />
       </div>
 
       <Skeleton width="80" height="10" rounded="sm" />

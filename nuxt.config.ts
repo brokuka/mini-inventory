@@ -17,11 +17,23 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@nuxt/eslint', 'template-copyright', '@nuxt/icon', "@vueuse/nuxt"],
+  modules: [
+    '@nuxt/eslint',
+    'template-copyright',
+    '@nuxt/icon',
+    '@vueuse/nuxt',
+    "@nuxtjs/google-fonts"
+  ],
 
   eslint: {
     config: {
       standalone: false,
+    },
+  },
+
+  googleFonts: {
+    families: {
+      Inter: [400, 500],
     },
   },
 
