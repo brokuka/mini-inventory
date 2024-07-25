@@ -33,7 +33,7 @@ function onCancelRemove() {
 }
 
 function onConfirmRemove() {
-  if (!item.value?.count)
+  if (!item.value?.count || !toRemoveCount.value)
     return
 
   if (item.value.count === 1) {
