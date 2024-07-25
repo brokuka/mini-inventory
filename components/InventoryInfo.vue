@@ -4,7 +4,7 @@ const SKELETONS_GROUP = [155, 190, 170, 160, 140]
 
 <template>
   <div class="info">
-    <img class="info_image" weight="208" height="240" src="/public/info_placeholder.webp" alt="Inventory placeholder">
+    <img class="info_image" weight="208" height="240" src="/info_placeholder.webp" alt="Inventory placeholder">
 
     <div class="skeletons">
       <Skeleton width="190" height="26" rounded="base" />

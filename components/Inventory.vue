@@ -11,17 +11,17 @@ const filledArray = Array.from({ length: ARRAY_SIZE }, (_, i) => {
   id: 1,
   order: 0,
   count: 4,
-	image: '/_nuxt/public/item/green.svg',
+	image: '/item/green.svg',
 }, 0, 1).fill({
   id: 2,
   order: 1,
   count: 1,
-	image: '/_nuxt/public/item/brown.svg',
+	image: '/item/brown.svg',
 }, 1, 2).fill({
 	id: 3,
 	order: 2,
 	count: 5,
-	image: '/_nuxt/public/item/purple.svg'
+	image: '/item/purple.svg'
 }, 2, 3)
 
 const items = ref(filledArray)
