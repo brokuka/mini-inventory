@@ -33,13 +33,16 @@ function onCancelRemove() {
 }
 
 function onConfirmRemove() {
-  if (!item.value?.count || !toRemoveCount.value)
+  if (!item.value?.count)
     return
 
   if (item.value.count === 1) {
     toRemove()
     return
   }
+
+  if (!toRemoveCount.value)
+    return
 
   /* Снимаем нужно количество */
   item.value.count -= toRemoveCount.value
