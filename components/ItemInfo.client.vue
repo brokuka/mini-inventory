@@ -61,7 +61,7 @@ function onConfirmRemove() {
 <template>
   <Transition name="fade">
     <div v-if="item" ref="modalRef" class="drawer">
-      <button class="button_close" type="button" @click="onModalClose">
+      <button class="button_close" type="button" aria-label="Закрыть" @click="onModalClose">
         <Icon class="icon_close" name="material-symbols:close" />
       </button>
 
@@ -75,13 +75,16 @@ function onConfirmRemove() {
 
           <div class="skeleton_group">
             <Skeleton
-              v-for="(skeleton, index) in SKELETON_GROUP" :key="skeleton + index" height="10"
-              :width="skeleton" rounded="sm"
+              v-for="(skeleton, index) in SKELETON_GROUP" :key="skeleton + index" height="10" :width="skeleton"
+              rounded="sm"
             />
           </div>
         </div>
 
-        <ItemRemoveCount v-model="isClickedRemove" v-model:count="toRemoveCount" :item-count="item.count" @cancel="onCancelRemove" @confirm="onConfirmRemove" />
+        <ItemRemoveCount
+          v-model="isClickedRemove" v-model:count="toRemoveCount" :item-count="item.count"
+          @cancel="onCancelRemove" @confirm="onConfirmRemove"
+        />
       </div>
     </div>
   </Transition>

@@ -2,7 +2,7 @@
 	<div class="placeholder">
 		<Skeleton width="699" height="36" rounded="lg" />
 
-		<button class="button_close" type="button">
+		<button class="button_close" type="button" aria-label="Закрыть">
 			<Icon class="icon_close" name="material-symbols:close" />
 		</button>
 	</div>
@@ -20,6 +20,8 @@
 }
 
 .button_close {
+	display: inline-flex;
+
 	position: absolute;
 	top: 7px;
 	right: 7px;
