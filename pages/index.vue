@@ -5,6 +5,8 @@
 				<InventoryInfo />
 				<Inventory/>
 			</div>
+
+			<Placeholder/>
 		</div>
 	</div>
 </template>
