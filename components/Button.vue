@@ -23,6 +23,10 @@ withDefaults(defineProps<{
   transition: all 0.2s ease;
 }
 
+.button:disabled:hover {
+	cursor: not-allowed
+}
+
 .button[data-variant='primary'] {
   background-color: $red;
 

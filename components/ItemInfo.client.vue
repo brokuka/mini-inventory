@@ -59,34 +59,32 @@ function onConfirmRemove() {
 </script>
 
 <template>
-  <Teleport to=".grid">
-    <Transition name="fade">
-      <div v-if="item" ref="modalRef" class="drawer">
-        <button class="button_close" type="button" @click="onModalClose">
-          <Icon class="icon_close" name="material-symbols:close" />
-        </button>
+  <Transition name="fade">
+    <div v-if="item" ref="modalRef" class="drawer">
+      <button class="button_close" type="button" @click="onModalClose">
+        <Icon class="icon_close" name="material-symbols:close" />
+      </button>
 
-        <div class="drawer_content">
-          <img class="item_image" :src="item.image" width="130" height="130" alt="Item image">
+      <div class="drawer_content">
+        <img class="item_image" :src="item.image" width="130" height="130" alt="Item image">
 
-          <Line />
+        <Line />
 
-          <div class="skeletons">
-            <Skeleton rounded="base" width="211" height="30" />
+        <div class="skeletons">
+          <Skeleton rounded="base" width="211" height="30" />
 
-            <div class="skeleton_group">
-              <Skeleton
-                v-for="(skeleton, index) in SKELETON_GROUP" :key="skeleton + index" height="10"
-                :width="skeleton" rounded="sm"
-              />
-            </div>
+          <div class="skeleton_group">
+            <Skeleton
+              v-for="(skeleton, index) in SKELETON_GROUP" :key="skeleton + index" height="10"
+              :width="skeleton" rounded="sm"
+            />
           </div>
-
-          <ItemRemoveCount v-model="isClickedRemove" v-model:count="toRemoveCount" :item-count="item.count" @cancel="onCancelRemove" @confirm="onConfirmRemove" />
         </div>
+
+        <ItemRemoveCount v-model="isClickedRemove" v-model:count="toRemoveCount" :item-count="item.count" @cancel="onCancelRemove" @confirm="onConfirmRemove" />
       </div>
-    </Transition>
-  </Teleport>
+    </div>
+  </Transition>
 </template>
 
 <style scoped lang="scss">

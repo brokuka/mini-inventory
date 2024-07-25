@@ -11,17 +11,17 @@ const filledArray = Array.from({ length: ARRAY_SIZE }, (_, i) => {
   id: 1,
   order: 0,
   count: 4,
-	image: '/item/green.svg',
+  image: '/item/green.svg',
 }, 0, 1).fill({
   id: 2,
   order: 1,
   count: 1,
-	image: '/item/brown.svg',
+  image: '/item/brown.svg',
 }, 1, 2).fill({
-	id: 3,
-	order: 2,
-	count: 5,
-	image: '/item/purple.svg'
+  id: 3,
+  order: 2,
+  count: 5,
+  image: '/item/purple.svg',
 }, 2, 3)
 
 const items = ref(filledArray)
@@ -69,17 +69,17 @@ function onDrop(e: DragEvent & { target: HTMLElement }) {
   }
 }
 
-
 const modal = ref<Item | null>(null)
 function onClickItem(item: Item) {
-	if (!item.count) return;
+  if (!item.count)
+    return
 
-  modal.value = item;
+  modal.value = item
 }
 
 function onItemRemove(toRemoveItem: Item) {
-	toRemoveItem.image = undefined
-	toRemoveItem.count = undefined
+  toRemoveItem.image = undefined
+  toRemoveItem.count = undefined
 }
 </script>
 
@@ -88,17 +88,15 @@ function onItemRemove(toRemoveItem: Item) {
     <ClientOnly>
       <div
         v-for="item in lc" :key="item.id" class="item" :data-empty="!item.count" :draggable="!!item?.image"
-        :data-order="item.order" @dragstart.stop="onStartDrag($event, item)" @drop="onDrop" @dragover.prevent
-        @dragenter.prevent
-        @click="onClickItem(item)"
-				:class="{ block: modal }"
+        :data-order="item.order" :class="{ block: modal }" @dragstart.stop="onStartDrag($event, item)" @drop="onDrop"
+        @dragover.prevent @dragenter.prevent @click="onClickItem(item)"
       >
         <div v-if="item.image">
           <div>
             <img width="54" height="54" :src="item.image" alt="Item image">
           </div>
 
-          <span class="item_count" v-if="item.count && item.count > 1">{{ item?.count }}</span>
+          <span v-if="item.count && item.count > 1" class="item_count">{{ item?.count }}</span>
         </div>
       </div>
 
@@ -107,17 +105,19 @@ function onItemRemove(toRemoveItem: Item) {
           <Icon class="spinner" name="svg-spinners:3-dots-move" />
         </div>
       </template>
+
+      <Teleport to=".grid">
+        <ItemInfo v-model="modal" @remove="onItemRemove" />
+      </Teleport>
     </ClientOnly>
   </div>
-
-  <ItemInfo v-model="modal" @remove="onItemRemove" />
 </template>
 
 <style lang="scss" scoped>
 .inventory {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 99.8px);
+  grid-template-rows: repeat(5, 1fr);
 
   border: 1px solid $primary-border;
   border-radius: 12px;
@@ -167,16 +167,16 @@ function onItemRemove(toRemoveItem: Item) {
 
   &:hover {
     background-color: #2f2f2f;
-		cursor: pointer;
+    cursor: pointer;
   }
 
-	&.block {
-		pointer-events: none;
-	}
+  &.block {
+    pointer-events: none;
+  }
 }
 
-.item[data-empty="true"] {
-	cursor: auto;
+.item[data-empty='true'] {
+  cursor: auto;
 }
 
 .item_count {

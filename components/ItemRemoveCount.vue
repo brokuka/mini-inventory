@@ -47,7 +47,7 @@ function onClickConfirm() {
           Отмена
         </Button>
 
-        <Button size="sm" @click="onClickConfirm">
+        <Button size="sm" :disabled="!count" @click="onClickConfirm">
           Подтвердить
         </Button>
       </div>
